@@ -1,6 +1,5 @@
 
 # Obtain and unzip the file
-
 if(!file.exists("exdata-data-household_power_consumption.zip")) {
         temp <- tempfile()
         download.file("http://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip",temp)
@@ -8,8 +7,7 @@ if(!file.exists("exdata-data-household_power_consumption.zip")) {
         unlink(temp)
 }
 
-# Read the file into R, 
-
+# Read the file into R 
 power <- read.table(file, header=T, sep=";")
 power$Date <- as.Date(power$Date, format="%d/%m/%Y")
 df <- power[(power$Date=="2007-02-01") | (power$Date=="2007-02-02"),]
@@ -21,7 +19,7 @@ df$Sub_metering_1 <- as.numeric(as.character(df$Sub_metering_1))
 df$Sub_metering_2 <- as.numeric(as.character(df$Sub_metering_2))
 df$Sub_metering_3 <- as.numeric(as.character(df$Sub_metering_3))
 
-
+# Create the first plot and genderate a PNG copy
 plot1 <- function() {
         hist(df$Global_active_power, main = paste("Global Active Power"), col="red", xlab="Global Active Power (kilowatts)")
         dev.copy(png, file="plot1.png", width=480, height=480)
@@ -30,15 +28,16 @@ plot1 <- function() {
 }
 plot1()
 
-plot1 <- function() {
+# Create the second plot and genderate a PNG copy
+plot2 <- function() {
         plot(df$timestamp,df$Global_active_power, type="l", xlab="", ylab="Global Active Power (kilowatts)")
         dev.copy(png, file="plot2.png", width=480, height=480)
         dev.off()
         cat("plot2.png has been saved in", getwd())
 }
-plot1()
+plot2()
 
-
+# Create the third plot and genderate a PNG copy
 plot3 <- function() {
         plot(df$timestamp,df$Sub_metering_1, type="l", xlab="", ylab="Energy sub metering")
         lines(df$timestamp,df$Sub_metering_2,col="red")
