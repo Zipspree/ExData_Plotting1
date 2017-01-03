@@ -49,7 +49,7 @@ plot3 <- function() {
 }
 plot3()
 
-
+# Create the fourth plot and genderate a PNG copy
 plot4 <- function() {
         par(mfrow=c(2,2))
         
